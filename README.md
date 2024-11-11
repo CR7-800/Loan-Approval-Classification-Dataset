@@ -1,5 +1,5 @@
 # Loan Approval Classification Dataset
-# 一、說明	
+# 一、描述	
 ### 使用從 Kaggle 取得的貸款核准分類資料集		
 來源可參考：[Loan Approval Classification Data on Kaggle  ](https://www.kaggle.com/datasets/taweilo/loan-approval-classification-data)  
 
