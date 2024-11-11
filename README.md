@@ -30,7 +30,7 @@ pandas 用於資料處理，matplotlib.pyplot 和 seaborn 用於資料視覺化�
 程式碼:  
 ```python
 loan=pd.read_csv('loan_data.csv')
-loan.head()
+loan
 ```
 執行結果:  
 ![螢幕擷取畫面 2024-11-11 142259](https://github.com/user-attachments/assets/c7eb3020-4b64-4063-bd6b-a39497b6723e)
