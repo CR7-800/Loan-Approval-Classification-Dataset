@@ -1,34 +1,34 @@
 # Loan Approval Classification Dataset
 
 ## 目錄
-1. [描述](1描述)
-2. [內容](2內容)
-3. [安裝與引入模組](3安裝與引入模組)
-4. [使用 pandas 讀取 CSV 文件](4使用-pandas-讀取-csv-文件)
-5. [檢查數據類型和缺失值](5檢查數據類型和缺失值)
-6. [數據編碼](6數據編碼)
-7. [確認型態](7確認型態)
-8. [欄位的中文說明](8欄位的中文說明)
-9. [繪製直方圖](9繪製直方圖)
-10. [繪製箱型圖](10繪製箱型圖)
-11. [計算相關係數矩陣並繪製熱圖](#11計算相關係數矩陣並繪製熱圖)
-12. [列出相關係數](#12列出相關係數)
-13. [隨機森林](#13隨機森林)
-14. [過採樣](#14過採樣)
-15. [結論](#15結論)
+1. [描述](#1-描述)
+2. [內容](#2-內容)
+3. [安裝與引入模組](#3-安裝與引入模組)
+4. [使用 pandas 讀取 CSV 文件](#4-使用-pandas-讀取-csv-文件)
+5. [檢查數據類型和缺失值](#5-檢查數據類型和缺失值)
+6. [數據編碼](#6-數據編碼)
+7. [確認型態](#7-確認型態)
+8. [欄位的中文說明](#8-欄位的中文說明)
+9. [繪製直方圖](#9-繪製直方圖)
+10. [繪製箱型圖](#10-繪製箱型圖)
+11. [計算相關係數矩陣並繪製熱圖](#11-計算相關係數矩陣並繪製熱圖)
+12. [列出相關係數](#12-列出相關係數)
+13. [隨機森林](#13-隨機森林)
+14. [過採樣](#14-過採樣)
+15. [結論](#15-結論)
 
-## 1.描述
+## 1. 描述
 ### 使用從 Kaggle 取得的貸款核准分類資料集		
 來源可參考：[Loan Approval Classification Data on Kaggle  ](https://www.kaggle.com/datasets/taweilo/loan-approval-classification-data)  
 
 透過 Kaggle 上的貸款核准分類資料集，用監督式學習方法訓練資料集並進行資料的前處理及特徵工程。  
 我們的目標是建立一個模型來預測貸款是否會被核准。
 
-## 2.內容
+## 2. 內容
 欄位名稱:      
 ![螢幕擷取畫面 2024-11-11 135846](https://github.com/user-attachments/assets/fe4edfd7-16c1-4f65-80ff-e92c1856a279)
 
-## 3.安裝與引入模組
+## 3. 安裝與引入模組
 在開始資料分析前，請確保已安裝 pandas、matplotlib 和 seaborn 模組。可以使用以下指令安裝：
 
 ```bash
@@ -44,7 +44,7 @@ import seaborn as sns
 ```
 pandas 用於資料處理，matplotlib.pyplot 和 seaborn 用於資料視覺化。
 
-## 4.使用 pandas 讀取 CSV 文件
+## 4. 使用 pandas 讀取 CSV 文件
 程式碼:  
 ```python
 loan=pd.read_csv('loan_data.csv')
@@ -55,7 +55,7 @@ loan
 該資料集包含 45,000 筆資料（rows）和 14 個欄位（columns）。  
 這些欄位代表申請人和貸款申請的不同特徵，適合用於進行貸款核准的預測分析。
 
-## 5.檢查數據類型和缺失值
+## 5. 檢查數據類型和缺失值
 程式碼:  
 ```python
 print(loan.dtypes)
@@ -65,7 +65,7 @@ print(loan.isnull().sum())
 ![螢幕擷取畫面 2024-11-11 144555](https://github.com/user-attachments/assets/e8167a51-3c15-41c7-a35d-7e2ca7e858a4)  
 檢查資料型別和缺失值是為了確保資料格式正確並處理缺失值，以便進行分析。
 
-## 6.數據編碼
+## 6. 數據編碼
 將性別、貸款違約紀錄、教育程度等類別進行編碼    
 使用 pd.get_dummies 對房屋擁有狀況和貸款目的進行編碼  
 程式碼:  
@@ -88,7 +88,7 @@ loan = pd.get_dummies(loan, columns=['loan_intent'], prefix='loan_intent')
 ```
 進行編碼的原因是為了將類別型資料轉換為數值型資料，以便機器學習模型能夠理解並處理這些特徵。
 
-## 7.確認型態
+## 7. 確認型態
 程式碼:  
 ```python
 #原數字型態: ['person_age', 'person_income', 'person_emp_exp', 'loan_amnt', 'loan_int_rate', 'loan_percent_income', 'cb_person_cred_hist_length', 'credit_score', 'loan_status']
@@ -112,7 +112,7 @@ print('原數字型態:',list3)
 ```
 區分數值型和文字型欄位，並嘗試將可轉換的文字型欄位轉為數值型，是為了便於後續的資料清理、特徵工程和模型訓練。
 
-## 8.欄位的中文說明
+## 8. 欄位的中文說明
 程式碼:  
 ```python
 label={ 'person_age': '借款人的年齡',
@@ -144,7 +144,7 @@ label={ 'person_age': '借款人的年齡',
 ```
 label 字典的作用是用來提供欄位的中文或詳細說明，便於在資料視覺化過程中顯示更易理解的標籤或標題。
 
-## 9.繪製直方圖(list1欄位)
+## 9. 繪製直方圖(list1欄位)
 程式碼:  
 ```python
 for cols in list1:
@@ -156,7 +156,7 @@ for cols in list1:
 執行結果(以年齡為例):  
 ![image](https://github.com/user-attachments/assets/12297265-2836-4609-ab38-78621d96dc7f)
 
-## 10.繪製箱型圖(list3原數字欄位)
+## 10. 繪製箱型圖(list3原數字欄位)
 程式碼:  
 ```python
 for cols in list3:
@@ -168,7 +168,7 @@ for cols in list3:
 執行結果(以貸款金額為例):  
 ![image](https://github.com/user-attachments/assets/1ab7d392-ffdf-4309-b089-be6141b774db)
 
-## 11.計算相關係數矩陣並繪製熱圖
+## 11. 計算相關係數矩陣並繪製熱圖
 程式碼:  
 ```python
 print(loan.corr())
@@ -178,7 +178,7 @@ sns.heatmap(loan.corr())
 ![output](https://github.com/user-attachments/assets/1958d42c-929c-4a13-9870-c49c6d558a6d)  
 繪製熱力圖的目的是視覺化資料集中各個數值型特徵之間的相關性，以便更直觀地觀察變數間的關係。
 
-## 12.列出相關係數
+## 12. 列出相關係數
 程式碼:  
 ```python
 print(loan.corr()['loan_status'].sort_values(ascending=False))
@@ -196,7 +196,7 @@ from imblearn.over_sampling import RandomOverSampler,SMOTE,ADASYN #過採樣
 from imblearn.under_sampling import RandomUnderSampler,NearMiss #欠採樣
 import joblib
 ```
-## 13.隨機森林
+## 13. 隨機森林
 使用隨機森林模型進行分類預測，並計算訓練和測試的準確率、分類報告和混淆矩陣。  
 程式碼:  
 ```python
@@ -224,7 +224,7 @@ print('混淆矩陣:\n',confusion_matrix(y_test,predict1))
 執行結果:  
 ![image](https://github.com/user-attachments/assets/70b26af6-39a2-48c7-a31d-6452b856df11)
 
-## 14.過採樣
+## 14. 過採樣
 使用 SMOTE 進行過採樣處理，以平衡數據集中的類別不平衡問題 。  
 程式碼:  
 ```python
@@ -260,7 +260,7 @@ print('混淆矩陣:\n',confusion_matrix(y_test,predict1))
 執行結果:  
 ![image](https://github.com/user-attachments/assets/b62dd030-78ff-4f0a-acb3-780358ad04bc)
 
-## 15.結論
+## 15. 結論
 透過 Kaggle 的貸款核准資料集，利用監督式學習方法進行資料處理、特徵工程和模型建構。我們使用過採樣以處理類別不平衡問題，並選擇隨機森林分類器作為主要模型。    
 
 準確度：隨機森林的測試集準確率（92.3%）略高於 SMOTE 過採樣模型（90.2%），顯示隨機森林在整體預測準確性上更好。    
